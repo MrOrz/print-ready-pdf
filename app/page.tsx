@@ -1,6 +1,20 @@
+"use client";
+
 import Image from "next/image";
+import { useLayoutEffect } from "react";
+import { PDFDocument, StandardFonts, rgb } from '@cantoo/pdf-lib';
+
+const PDF_URL = 'https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf'
 
 export default function Home() {
+  useLayoutEffect(() => {
+    (async () => {
+      const bytes = await fetch(PDF_URL).then((res) => res.arrayBuffer());
+      const pdf = await PDFDocument.load(bytes);
+      console.log({ pdf });
+    })();
+  }, []);
+
   return (
     <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
