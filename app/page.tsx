@@ -1,6 +1,21 @@
+"use client"
+
+import { getDocument, GlobalWorkerOptions } from 'pdfjs-dist'
 import Image from "next/image";
+import { useLayoutEffect } from 'react';
+
+const PDF_URL = 'https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf'
 
 export default function Home() {
+  useLayoutEffect(() => {
+    GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
+
+    (async () => {
+      const pdf = await getDocument(PDF_URL).promise;
+      console.log({pdf});
+    })();
+  }, []);
+
   return (
     <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
